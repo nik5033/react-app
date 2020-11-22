@@ -1,8 +1,8 @@
 import React from 'react';
 import {useRoutes} from 'hookrouter';
 import HomePage from "./HomePage";
-import SingIn from "./SingIn";
-import SingUp from "./SingUp";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 import NotFoundPage from "./NotFoundPage";
 import HMenu from "./Menu";
 import styled from "styled-components";
@@ -20,14 +20,15 @@ const H1 = styled.h1`
     text-align: center
 `
 
-export const routes = {
+const routes = {
     '/': () => <HomePage />,
-    '/auth': () => <SingIn />,
-    '/register': () => <SingUp />
+    '/auth': () => <SignIn />,
+    '/register': () => <SignUp />
 };
 
 export default function App(){
         const match = useRoutes(routes);
+        
         return(
             <div>
                 <HMenu />
