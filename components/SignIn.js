@@ -3,29 +3,35 @@ import {navigate} from 'hookrouter';
 import styled from 'styled-components';
 import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
+import Avatar from "@material-ui/core/Avatar";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
 
 const Div = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
 `
 
-/*const Form = styled.form`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-`*/
+const Buttons = styled(Button)`
+    width: 100%;
+`
+
+const StyledH = styled.h2`
+    color: #3f51b5;
+`
 
 export default function SingIn () {
     navigate('/auth');
     return(
         <div>
             <Div>
+                <Avatar>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <StyledH>Sign In</StyledH>
                 <form>
-                    <h2>SignIn</h2>
-                    <div>
-                        <TextField id="filled-basic" label="Email" variant="filled" />
-                    </div>
                     <div>
                         <TextField id="filled-basic" label="Username" variant="filled" />
                     </div>
@@ -33,9 +39,9 @@ export default function SingIn () {
                         <TextField id="filled-basic" label="Password" variant="filled" />
                     </div>
                     <div>
-                        <Button variant="outlined" color="primary">
+                        <Buttons variant="outlined" color="primary">
                             Sign In
-                        </Button>
+                        </Buttons>
                     </div>
                 </form>
             </Div>
