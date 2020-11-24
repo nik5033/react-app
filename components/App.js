@@ -1,11 +1,12 @@
 import React from 'react';
 import {useRoutes} from 'hookrouter';
+import styled from "styled-components";
 import HomePage from "./HomePage";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import NotFoundPage from "./NotFoundPage";
 import HMenu from "./Menu";
-import styled from "styled-components";
+import Profile from "./Profile";
 
 const H1 = styled.h1`
     margin: 1em 0 0.5em 0;
@@ -23,7 +24,8 @@ const H1 = styled.h1`
 const routes = {
     '/': () => <HomePage />,
     '/auth': () => <SignIn />,
-    '/register': () => <SignUp />
+    '/register': () => <SignUp />,
+    '/profile': () => <Profile />
 };
 
 export default function App(){
