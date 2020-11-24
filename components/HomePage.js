@@ -11,8 +11,8 @@ export default function HomePage () {
     return(
         <StyledDiv>
             <h2>Welcome to the club, buddy</h2>
-            <p>On this site you can make you notes</p>
-            <img src='../public/billy.jpeg' alt="Oh fuck you leatherman"/>
+            <p>On this website you can make you notes</p>
+            <img src='../public/billy.jpeg' alt="No"/>
         </StyledDiv>
     )
 }
