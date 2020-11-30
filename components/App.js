@@ -7,6 +7,7 @@ import SignUp from "./SignUp";
 import NotFoundPage from "./NotFoundPage";
 import HMenu from "./Menu";
 import Profile from "./Profile";
+import Notes from "./Notes";
 
 const H1 = styled.h1`
     margin: 1em 0 0.5em 0;
@@ -25,7 +26,8 @@ const routes = {
     '/': () => <HomePage />,
     '/auth': () => <SignIn />,
     '/register': () => <SignUp />,
-    '/profile': () => <Profile />
+    '/profile': () => <Profile />,
+    '/notes': () => <Notes />
 };
 
 export default function App(){
