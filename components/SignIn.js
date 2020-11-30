@@ -22,6 +22,14 @@ const StyledH = styled.h2`
 `
 
 export default function SingIn () {
+    const [user, setUser] = React.useState('');
+    const [pass, setPass] = React.useState('');
+
+    const Submit = (event) => {
+        alert("username: " + user + '\n' + "password: " + pass);
+        event.preventDefault();
+    }
+
     navigate('/auth');
     return(
         <div>
@@ -32,13 +40,13 @@ export default function SingIn () {
                 <StyledH>Sign In</StyledH>
                 <form>
                     <div>
-                        <TextField id="filled-basic" label="Username" variant="filled" />
+                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => {setUser(e.target.value)}}/>
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Password" variant="filled" />
+                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}}/>
                     </div>
                     <div>
-                        <Buttons variant="outlined" color="primary">
+                        <Buttons variant="outlined" color="primary" onClick={Submit}>
                             Sign In
                         </Buttons>
                     </div>
