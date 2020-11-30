@@ -11,15 +11,24 @@ export default function ProfMenu() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleCloseProf = () => {
+    const handleProf = () => {
         setAnchorEl(null);
-        navigate('profile');
+        navigate('/profile');
     };
+
+    const handleNotes = () => {
+        setAnchorEl(null);
+        navigate('/notes');
+    };
+
+    const handleLogout = () => {
+        setAnchorEl(null);
+        navigate('/');
+    }
 
     const handleClose = () => {
         setAnchorEl(null);
-        navigate('/')
-    };
+    }
 
     return (
         <div>
@@ -31,9 +40,9 @@ export default function ProfMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleCloseProf}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Notes</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleProf}>Profile</MenuItem>
+                <MenuItem onClick={handleNotes}>Notes</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
         </div>
     );
