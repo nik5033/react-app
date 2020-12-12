@@ -5,11 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 
 const Buttons = styled(Button)`
     width: 100%
@@ -31,17 +26,43 @@ const StyledDiv = styled.div`
 `
 
 export default function SingUp () {
-    const [user, setUser] = React.useState(null);
-    const [pass, setPass] = React.useState(null);
-    const [email, setEmail] = React.useState(null);
-    const [gender, setGender] = React.useState('female');
+    const [user, setUser] = React.useState("");
+    const [pass, setPass] = React.useState("");
+
+    const handleSubmit = (event) => {
+        const input = JSON.stringify({
+            username: user,
+            password: pass
+        })
+        fetch('/api/reg', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: input
+        })
+            .then((resp) => {
+                return resp.json()
+            })
+            .then((data) => {
+                 if (data.success) {
+                     navigate('/auth')
+                 }
+                 else {
+                     alert(data.message)
+                 }
+            })
+            .catch(e => {console.error(e)})
+        event.preventDefault();
+    }
 
     const Submit = (event) => {
-        if(user == null || pass == null || email == null) {
+        if(user === '' || pass === '') {
             alert("No");
         }
         else {
-            alert("username: " + user + '\n' + "password: " + pass + '\n' + "email: " + email + '\n' + "Gender: " + gender);
+            alert("username: " + user + '\n' + "password: " + pass);
         }
         event.preventDefault();
     }
@@ -56,25 +77,13 @@ export default function SingUp () {
                 <StyledH>Sign Up</StyledH>
                 <form>
                     <div>
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Gender</FormLabel>
-                            <RadioGroup value={gender} onChange={e => {setGender(e.target.value)}}>
-                                <FormControlLabel value="female" control={<Radio color='primary'/>} label="Female" />
-                                <FormControlLabel value="male" control={<Radio color='primary'/>} label="Male" />
-                            </RadioGroup>
-                        </FormControl>
-                    </div>
-                    <StyledDiv>
-                        <TextField id="filled-basic" label="Username" variant="outlined" onChange={e => setUser(e.target.value)}/>
-                    </StyledDiv>
-                    <div>
-                        <TextField id="filled-basic" label="Email" variant="outlined" onChange={e => {setPass(e.target.value)}}/>
+                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => setUser(e.target.value)}/>
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Password" variant="outlined" onChange={e => {setEmail(e.target.value)}}/>
+                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}}/>
                     </div>
                     <div>
-                        <Buttons variant="outlined" color="primary" onClick={Submit}>
+                        <Buttons variant="outlined" color="primary" onClick={handleSubmit}>
                             Sign Up
                         </Buttons>
                     </div>

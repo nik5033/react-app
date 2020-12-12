@@ -25,8 +25,44 @@ export default function SingIn () {
     const [user, setUser] = React.useState('');
     const [pass, setPass] = React.useState('');
 
-    const Submit = (event) => {
-        alert("username: " + user + '\n' + "password: " + pass);
+    const A = () => {
+        fetch('/api/check', {
+            method: "GET",
+        })
+            .then((resp) => {
+                return resp.json();
+            })
+            .then((data) => {
+                console.log(data);
+            })
+    }
+
+    const handleSubmit = (event) => {
+        const input = JSON.stringify({
+            username: user,
+            password: pass
+        })
+        fetch('/api/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: input
+        })
+            .then((resp) => {
+                return resp.json()
+            })
+            .then((data) => {
+                if(data.success) {
+                    localStorage.setItem('username', data.username);
+                    navigate('/profile');
+                }
+                else{
+                    alert(data.message)
+                }
+            })
+            .catch(e => {console.error(e)})
         event.preventDefault();
     }
 
@@ -40,13 +76,13 @@ export default function SingIn () {
                 <StyledH>Sign In</StyledH>
                 <form>
                     <div>
-                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => {setUser(e.target.value)}}/>
+                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => {setUser(e.target.value)}} />
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}}/>
+                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}} />
                     </div>
                     <div>
-                        <Buttons variant="outlined" color="primary" onClick={Submit}>
+                        <Buttons variant="outlined" color="primary" onClick={handleSubmit}>
                             Sign In
                         </Buttons>
                     </div>
