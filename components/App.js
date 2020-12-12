@@ -8,6 +8,7 @@ import NotFoundPage from "./NotFoundPage";
 import HMenu from "./Menu";
 import Profile from "./Profile";
 import Notes from "./Notes";
+import LogOut from "./Logout";
 
 const H1 = styled.h1`
     margin: 1em 0 0.5em 0;
@@ -27,7 +28,8 @@ const routes = {
     '/auth': () => <SignIn />,
     '/register': () => <SignUp />,
     '/profile': () => <Profile />,
-    '/notes': () => <Notes />
+    '/notes': () => <Notes />,
+    '/logout': () => <LogOut />
 };
 
 export default function App(){
