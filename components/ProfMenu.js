@@ -6,8 +6,24 @@ import Tab from '@material-ui/core/Tab';
 
 export default function ProfMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [Auth, setAuth] = React.useState(false);
+
+    const handleAbling = (event) => {
+        fetch('/api/check', {
+            method: "GET",
+        })
+            .then((resp) => {
+                return resp.json();
+            })
+            .then((data) => {
+                setAuth(data.IsAuth);
+                return Auth
+            })
+        event.preventDefault();
+    }
 
     const handleClick = (event) => {
+        handleAbling(event);
         setAnchorEl(event.currentTarget);
     };
 
@@ -21,9 +37,22 @@ export default function ProfMenu() {
         navigate('/notes');
     };
 
-    const handleLogout = () => {
+    const handleLogout = (event) => {
         setAnchorEl(null);
-        navigate('/');
+        fetch('/api/out', {
+            method: "GET",
+        })
+            .then((resp) => {
+                resp.json();
+        })
+            .then((data) => {
+                localStorage.clear();
+                navigate('/')
+            })
+            .catch(e => {
+            console.error((e))
+        })
+        event.preventDefault();
     }
 
     const handleClose = () => {
@@ -40,9 +69,24 @@ export default function ProfMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleProf}>Profile</MenuItem>
-                <MenuItem onClick={handleNotes}>Notes</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                <MenuItem
+                    onClick={handleProf}
+                    disabled={!Auth}
+                >
+                    Profile
+                </MenuItem>
+                <MenuItem
+                    onClick={handleNotes}
+                    disabled={!Auth}
+                >
+                    Notes
+                </MenuItem>
+                <MenuItem
+                    onClick={handleLogout}
+                    disabled={!Auth}
+                >
+                    Logout
+                </MenuItem>
             </Menu>
         </div>
     );
