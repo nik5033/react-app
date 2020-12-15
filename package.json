@@ -4,8 +4,7 @@
   "description": "frontend",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack --mode production"
+    "start": "webpack serve"
   },
   "repository": "https://github.com/nik5033/react-app.git",
   "author": "Nikita Gudkov",
@@ -29,7 +28,9 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
+    "redux": "^4.0.5",
     "styled-components": "^5.2.1"
   }
 }

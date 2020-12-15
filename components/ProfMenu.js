@@ -9,7 +9,7 @@ export default function ProfMenu() {
     const [Auth, setAuth] = React.useState(false);
 
     const handleAbling = (event) => {
-        fetch('/api/check', {
+        fetch('/api/user/check', {
             method: "GET",
         })
             .then((resp) => {
@@ -39,7 +39,7 @@ export default function ProfMenu() {
 
     const handleLogout = (event) => {
         setAnchorEl(null);
-        fetch('/api/out', {
+        fetch('/api/user/out', {
             method: "GET",
         })
             .then((resp) => {

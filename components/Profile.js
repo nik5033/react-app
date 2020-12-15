@@ -26,7 +26,7 @@ export default function Profile() {
                     Profile
                 </Typography>
                 <Typography variant="body2" component="p">
-                    Name: test
+                    Name: {localStorage.getItem('username')}
                 </Typography>
                 <Typography variant="body2" component="p">
                     Email: test@test

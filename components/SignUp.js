@@ -34,7 +34,7 @@ export default function SingUp () {
             username: user,
             password: pass
         })
-        fetch('/api/reg', {
+        fetch('/api/user/reg', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

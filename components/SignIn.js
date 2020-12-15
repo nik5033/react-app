@@ -25,24 +25,12 @@ export default function SingIn () {
     const [user, setUser] = React.useState('');
     const [pass, setPass] = React.useState('');
 
-    const A = () => {
-        fetch('/api/check', {
-            method: "GET",
-        })
-            .then((resp) => {
-                return resp.json();
-            })
-            .then((data) => {
-                console.log(data);
-            })
-    }
-
     const handleSubmit = (event) => {
         const input = JSON.stringify({
             username: user,
             password: pass
         })
-        fetch('/api/login', {
+        fetch('/api/user/login', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
