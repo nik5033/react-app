@@ -21,6 +21,21 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+        compress: true,
+        port: 8080,
+        open: true,
+        proxy: {
+            '/api': {
+                target: {
+                    host: '127.0.0.1',
+                    protocol: 'http',
+                    port: 4444
+                }
+            }
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/index.html"
