@@ -1,13 +1,10 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import styled from "styled-components";
-import MuiAccordion from '@material-ui/core/Accordion';
-import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import {Add} from "@material-ui/icons";
 import NoteFiled from "./NoteField";
-import Button from "@material-ui/core/Button";
+import Note from "./Note";
+
 
 const AddNoteDiv = styled.div`
       display: flex;
@@ -18,38 +15,59 @@ const StyledIcon = styled(IconButton)`
       height: 40px;
 `
 
-const StyledDiv = styled.div`
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      flex-direction: row;
-`
-
 const StyledHR = styled.hr`
     color: #3A62CA;
 `
 
+const MainDiv = styled.div`
+      display: flex;
+      flex-direction: column;
+`
+
 
 export default function Notes() {
-    const [show, setShow] = React.useState(false)
-    const [time, setTime] = React.useState(new Date());
+    const [show, setShow] = React.useState(false);
+    const [New, setNew] = React.useState(true);
+    const [Notes, setNotes] = React.useState(new Array());
 
-    const [expanded, setExpanded] = React.useState('');
-
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
-
-    const Time = () => {
-        setTime(new Date())
+    const getNote = () => {
+        fetch('/api/note/get?username=' + localStorage.getItem('username'), {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then((resp) => {
+                return resp.json()
+            })
+            .then((data) => {
+                setNotes(data.notes);
+            })
+            .catch(e => {
+                console.error(e);
+            })
     }
 
     const handleClick = () => {
-        setShow(!show)
+        setShow(!show);
     }
 
+    const notes = () => {
+        if(New){
+            getNote();
+            setNew(!New);
+        }
+
+        return Notes.map((item) =>
+            <Note id={item[0]} note={item[1]}/>
+        )
+    }
+
+
     return (
-        <div>
+        <MainDiv>
+            {notes()}
             <form>
                 <AddNoteDiv>
                     <StyledIcon onClick={handleClick}>
@@ -58,23 +76,6 @@ export default function Notes() {
                     {show && (<NoteFiled />)}
                 </AddNoteDiv>
             </form>
-            <StyledHR/>
-            <StyledDiv>
-                <div>
-                    <MuiAccordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                        <MuiAccordionSummary>
-                            <Typography>Collapsible Group Item #1</Typography>
-                        </MuiAccordionSummary>
-                        <MuiAccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </MuiAccordionDetails>
-                    </MuiAccordion>
-                </div>
-        </StyledDiv>
-        </div>
+        </MainDiv>
     );
 }
