@@ -19,7 +19,7 @@ const StyledTextField = styled(TextField)`
   margin-top: 10px;
 `
 
-export default function NoteField() {
+export default function NoteField(props) {
     const [title, setTitle] = React.useState('');
     const [text, setText] = React.useState('');
 
@@ -31,8 +31,7 @@ export default function NoteField() {
         const input = JSON.stringify({
             username: localStorage.getItem('username'),
             title: title,
-            text: text,
-            data: new Date()
+            text: text
         })
 
         fetch('/api/note/add', {
@@ -47,8 +46,9 @@ export default function NoteField() {
                 return resp.json()
             })
             .then((data) => {
-                alert(data.message);
-                navigate('/notes')
+                let note = props.notes.slice()
+                note.push([data.id, [title, text]])
+                props.onChange(note)
             })
             .catch(e => {console.error(e)})
         e.preventDefault();

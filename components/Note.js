@@ -7,6 +7,7 @@ import AccordionActions from "@material-ui/core/AccordionActions";
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import styled from "styled-components";
+import {number} from "prop-types";
 
 const StyledAccordion = styled(Accordion)`
     //margin-top: 10px;
@@ -21,9 +22,17 @@ const StyledDiv = styled.div`
       margin-top: 10px;
 `
 
+const StyledP = styled.p`
+      align-self: center;
+`
+
+const StyledAccordionActions = styled(AccordionActions)`
+      justify-content: flex-start;
+      align-items: flex-end;
+`
+
 export default function Note(props) {
     const [expanded, setExpanded] = React.useState('');
-    const [id] = React.useState(props.id)
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -32,7 +41,7 @@ export default function Note(props) {
     const handleClick = () => {
         const input = JSON.stringify({
             username: localStorage.getItem('username'),
-            id: id
+            id: props.id
         })
 
         fetch('/api/note/rm', {
@@ -47,7 +56,15 @@ export default function Note(props) {
                 return resp.json()
             })
             .then((data) => {
-                alert("Note was deleted")
+                let note = props.notes.slice();
+                props.notes.map((item, number) => {
+                    console.log([item[0], props.id])
+                    if(item[0] == props.id) {
+                        note.splice(number, 1)
+                    }
+                })
+                props.Change(note)
+                setExpanded('')
             })
             .catch(e => {
                 console.error(e);
@@ -56,9 +73,9 @@ export default function Note(props) {
 
     return(
         <StyledDiv>
-            <StyledAccordion square expanded={expanded === 'panel' + id} onChange={handleChange('panel' + id)}>
+            <StyledAccordion square expanded={expanded === 'panel' + props.id} onChange={handleChange('panel' + props.id)}>
                 <AccordionSummary>
-                    <Typography>{props.note[0]}</Typography>
+                    <Typography>{props.note[0]} {props.id}</Typography>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
@@ -67,15 +84,18 @@ export default function Note(props) {
                     </Typography>
                 </AccordionDetails>
                 <Divider />
-                <AccordionActions>
-                    <Button
-                        size="small"
-                        color="primary"
-                        onClick={handleClick}
-                    >
-                        Delete
-                    </Button>
-                </AccordionActions>
+                    <AccordionActions>
+                        <StyledP>
+                            a
+                        </StyledP>
+                        <Button
+                            size="small"
+                             color="primary"
+                            onClick={handleClick}
+                        >
+                            Delete
+                        </Button>
+                    </AccordionActions>
             </StyledAccordion>
         </StyledDiv>
     )

@@ -15,10 +15,6 @@ const StyledIcon = styled(IconButton)`
       height: 40px;
 `
 
-const StyledHR = styled.hr`
-    color: #3A62CA;
-`
-
 const MainDiv = styled.div`
       display: flex;
       flex-direction: column;
@@ -42,6 +38,7 @@ export default function Notes() {
                 return resp.json()
             })
             .then((data) => {
+                console.log(data.notes)
                 setNotes(data.notes);
             })
             .catch(e => {
@@ -60,7 +57,7 @@ export default function Notes() {
         }
 
         return Notes.map((item) =>
-            <Note id={item[0]} note={item[1]}/>
+            <Note id={item[0]} note={item[1]} Change={setNotes} notes={Notes}/>
         )
     }
 
@@ -73,7 +70,7 @@ export default function Notes() {
                     <StyledIcon onClick={handleClick}>
                         <Add />
                     </StyledIcon>
-                    {show && (<NoteFiled />)}
+                    {show && (<NoteFiled onChange={setNotes} notes={Notes}/>)}
                 </AddNoteDiv>
             </form>
         </MainDiv>
