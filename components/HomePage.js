@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useTitle} from "hookrouter";
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -8,6 +9,8 @@ const StyledDiv = styled.div`
 `
 
 export default function HomePage () {
+    useTitle('Home');
+
     return(
         <StyledDiv>
             <h2>Welcome to the club, buddy</h2>
