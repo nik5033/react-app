@@ -4,6 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from "@material-ui/core/Avatar";
 import styled from 'styled-components';
+import {useTitle} from "hookrouter";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -17,6 +18,31 @@ const StyledCard = styled(Card)`
 `
 
 export default function Profile() {
+    useTitle('Profile');
+
+    const [number, setNumber] = React.useState(0);
+
+    const Count_notes = () => {
+        fetch('/api/note/get?username=' + localStorage.getItem('username'), {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+            .then((resp) => {
+                return resp.json()
+            })
+            .then((data) => {
+                setNumber(data.notes.length);
+            })
+            .catch(e => {
+                console.error(e);
+            })
+
+        return number
+    }
+
     return (
         <StyledDiv>
         <StyledCard>
@@ -26,10 +52,10 @@ export default function Profile() {
                     Profile
                 </Typography>
                 <Typography variant="body2" component="p">
-                    Name: {localStorage.getItem('username')}
+                    Username: {localStorage.getItem('username')}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    Email: test@test
+                    Number of notes: {Count_notes()}
                 </Typography>
             </CardContent>
         </StyledCard>
