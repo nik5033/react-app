@@ -7,10 +7,28 @@ import AccordionActions from "@material-ui/core/AccordionActions";
 import Button from "@material-ui/core/Button";
 import Divider from '@material-ui/core/Divider';
 import styled from "styled-components";
-import {number} from "prop-types";
+
+const StyledHeader = styled(Typography)`
+    color: #343434;
+    font-weight: normal;
+    font-family: 'Ultra', sans-serif;
+    font-size: 18px;
+    line-height: 42px;
+    text-transform: uppercase;
+    text-shadow: 0 2px white, 0 3px #777;
+`
+
+const StyledText = styled(Typography)`
+    color: #343434;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: normal;
+    font-family: 'Orienta', sans-serif;
+    letter-spacing: 1px;
+    font-style: italic;
+`
 
 const StyledAccordion = styled(Accordion)`
-    //margin-top: 10px;
     width: 100%;
 `
 
@@ -22,17 +40,9 @@ const StyledDiv = styled.div`
       margin-top: 10px;
 `
 
-const StyledP = styled.p`
-      align-self: center;
-`
-
-const StyledAccordionActions = styled(AccordionActions)`
-      justify-content: flex-start;
-      align-items: flex-end;
-`
-
 export default function Note(props) {
     const [expanded, setExpanded] = React.useState('');
+    const Max_Length = 158;
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -55,10 +65,9 @@ export default function Note(props) {
             .then((resp) => {
                 return resp.json()
             })
-            .then((data) => {
+            .then(() => {
                 let note = props.notes.slice();
                 props.notes.map((item, number) => {
-                    console.log([item[0], props.id])
                     if(item[0] == props.id) {
                         note.splice(number, 1)
                     }
@@ -71,23 +80,33 @@ export default function Note(props) {
             })
     }
 
+    const Text = () => {
+        let text = '';
+        console.log(props.note[1]);
+        for(let i = 0; i < Math.floor(props.note[1].length / Max_Length); i++) {
+            text += (props.note[1].substring(i*Max_Length, (i+1)*Max_Length) + '\n');
+        }
+        text += props.note[1].substring((Math.floor(props.note[1].length / Max_Length))*Max_Length)
+        console.log(text);
+        return text
+    }
+
     return(
         <StyledDiv>
             <StyledAccordion square expanded={expanded === 'panel' + props.id} onChange={handleChange('panel' + props.id)}>
                 <AccordionSummary>
-                    <Typography>{props.note[0]} {props.id}</Typography>
+                    <StyledHeader>
+                        Title: {props.note[0]}
+                    </StyledHeader>
                 </AccordionSummary>
                 <Divider />
                 <AccordionDetails>
-                    <Typography>
-                        {props.note[1]}
-                    </Typography>
+                    <StyledText>
+                        {Text()}
+                    </StyledText>
                 </AccordionDetails>
                 <Divider />
                     <AccordionActions>
-                        <StyledP>
-                            a
-                        </StyledP>
                         <Button
                             size="small"
                              color="primary"
