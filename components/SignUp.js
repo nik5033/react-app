@@ -1,5 +1,5 @@
 import React from 'react';
-import {navigate} from "hookrouter";
+import {navigate, useTitle} from "hookrouter";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
@@ -26,6 +26,8 @@ const StyledDiv = styled.div`
 `
 
 export default function SingUp () {
+    useTitle('Sign Up');
+
     const [user, setUser] = React.useState("");
     const [pass, setPass] = React.useState("");
 

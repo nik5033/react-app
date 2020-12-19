@@ -1,5 +1,5 @@
 import React from 'react';
-import {navigate} from 'hookrouter';
+import {navigate, useTitle, useRedirect} from 'hookrouter';
 import styled from 'styled-components';
 import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
@@ -22,6 +22,8 @@ const StyledH = styled.h2`
 `
 
 export default function SingIn () {
+    useTitle('Sign In');
+
     const [user, setUser] = React.useState('');
     const [pass, setPass] = React.useState('');
 
