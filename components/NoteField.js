@@ -2,12 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import {navigate} from "hookrouter";
 
 const StyledDiv = styled.div`
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
+      margin-top: 15px;
 `
 
 const Buttons = styled(Button)`
@@ -16,14 +16,26 @@ const Buttons = styled(Button)`
 `
 
 const StyledTextField = styled(TextField)`
+        width:250%;
+  margin-top: 10px;
+`
+
+const StyledTitleField = styled(TextField)`
   margin-top: 10px;
 `
 
 export default function NoteField(props) {
     const [title, setTitle] = React.useState('');
     const [text, setText] = React.useState('');
+    const [error, setError] = React.useState(false)
 
-    const handleChange = (e) => {
+    const handleChangeText = (e) => {
+        setError(false);
+        setText(e.target.value)
+    }
+
+    const handleChangeTitle = (e) => {
+        setError(false);
         setText(e.target.value)
     }
 
@@ -33,36 +45,52 @@ export default function NoteField(props) {
             title: title,
             text: text
         })
+        if (title !== '' && text !== '') {
+            fetch('/api/note/add', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: input
+            })
+                .then((resp) => {
+                    return resp.json()
+                })
+                .then((data) => {
+                    let note = props.notes.slice()
+                    note.push([data.id, [data.title, data.text, data.date]])
+                    props.onChange(note)
+                })
+                .catch(e => {
+                    console.error(e)
+                })
+        }
+        else{
+            setError(true)
+        }
 
-        fetch('/api/note/add', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: input
-        })
-            .then((resp) => {
-                return resp.json()
-            })
-            .then((data) => {
-                let note = props.notes.slice()
-                note.push([data.id, [title, text]])
-                props.onChange(note)
-            })
-            .catch(e => {console.error(e)})
         e.preventDefault();
     }
 
     return (
         <StyledDiv>
-                <StyledTextField label="Title" variant="outlined" size='small' onChange={e => {setTitle(e.target.value)}}/>
+                <StyledTitleField
+                    error={error}
+                    helperText={error ? "Incorrect entry." : ''}
+                    label="Title"
+                    variant="outlined"
+                    size='small'
+                    onChange={handleChangeTitle}
+                />
                 <StyledTextField
+                    error = {error}
+                    helperText={error ? "Incorrect entry." : ''}
                     label="Multiline"
                     multiline
                     rows={4}
                     variant="outlined"
-                    onChange={handleChange}
+                    onChange={handleChangeText}
                 />
                 <Buttons
                     variant="outlined"
