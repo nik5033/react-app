@@ -15,12 +15,21 @@ const StyledHeader = styled(Typography)`
     font-size: 18px;
     line-height: 42px;
     text-transform: uppercase;
-    text-shadow: 0 2px white, 0 3px #777;
+`
+
+const StyledDate = styled(Typography)`
+    margin-left: 109rem;
+    color: #343434;
+    font-weight: normal;
+    font-family: 'Ultra', sans-serif;
+    font-size: 13px;
+    line-height: 42px;
+    text-transform: uppercase;
 `
 
 const StyledText = styled(Typography)`
     color: #343434;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 40px;
     font-weight: normal;
     font-family: 'Orienta', sans-serif;
@@ -29,6 +38,7 @@ const StyledText = styled(Typography)`
 `
 
 const StyledAccordion = styled(Accordion)`
+    border: 2px solid #3A62CA;
     width: 100%;
 `
 
@@ -38,6 +48,19 @@ const StyledDiv = styled.div`
       justify-content: flex-start;
       flex-direction: row;
       margin-top: 10px;
+`
+
+const StyledDivider = styled(Divider)`
+    background-color: #3A62CA;
+`
+
+const StyledPTitle = styled.p`
+    font-size: 16px;
+    margin-top: -10px;
+`
+
+const StyledPDate = styled.p`
+    margin-top: -10px;
 `
 
 export default function Note(props) {
@@ -96,16 +119,19 @@ export default function Note(props) {
             <StyledAccordion square expanded={expanded === 'panel' + props.id} onChange={handleChange('panel' + props.id)}>
                 <AccordionSummary>
                     <StyledHeader>
-                        Title: {props.note[0]}
+                        Title: <StyledPTitle>{props.note[0]}</StyledPTitle>
                     </StyledHeader>
+                    <StyledDate>
+                        Date: <StyledPDate>{props.note[2].replace('T', ' ').substr(0,19)}</StyledPDate>
+                    </StyledDate>
                 </AccordionSummary>
-                <Divider />
+                <StyledDivider />
                 <AccordionDetails>
                     <StyledText>
                         {Text()}
                     </StyledText>
                 </AccordionDetails>
-                <Divider />
+                <StyledDivider />
                     <AccordionActions>
                         <Button
                             size="small"
