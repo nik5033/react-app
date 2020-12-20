@@ -6,6 +6,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import NotFoundPage from "./NotFoundPage";
 import HMenu from "./Menu";
+import Protected from "./Protected";
 import Profile from "./Profile";
 import Notes from "./Notes";
 
@@ -26,8 +27,8 @@ const routes = {
     '/': () => <HomePage />,
     '/auth': () => <SignIn />,
     '/register': () => <SignUp />,
-    '/profile': () => <Profile />,
-    '/notes': () => <Notes />
+    '/profile': () => <Protected component={Profile}/>,
+    '/notes': () => <Protected component={Notes} />
 };
 
 export default function App(){
