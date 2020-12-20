@@ -18,11 +18,11 @@ const StyledHeader = styled(Typography)`
 `
 
 const StyledDate = styled(Typography)`
-    margin-left: 109rem;
+    margin-right: 147em;
     color: #343434;
     font-weight: normal;
     font-family: 'Ultra', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 42px;
     text-transform: uppercase;
 `
@@ -38,7 +38,7 @@ const StyledText = styled(Typography)`
 `
 
 const StyledAccordion = styled(Accordion)`
-    border: 2px solid #3A62CA;
+    border: 4px solid #3A62CA;
     width: 100%;
 `
 
@@ -51,16 +51,8 @@ const StyledDiv = styled.div`
 `
 
 const StyledDivider = styled(Divider)`
+    height: 3px;
     background-color: #3A62CA;
-`
-
-const StyledPTitle = styled.p`
-    font-size: 16px;
-    margin-top: -10px;
-`
-
-const StyledPDate = styled.p`
-    margin-top: -10px;
 `
 
 export default function Note(props) {
@@ -105,12 +97,10 @@ export default function Note(props) {
 
     const Text = () => {
         let text = '';
-        console.log(props.note[1]);
         for(let i = 0; i < Math.floor(props.note[1].length / Max_Length); i++) {
             text += (props.note[1].substring(i*Max_Length, (i+1)*Max_Length) + '\n');
         }
         text += props.note[1].substring((Math.floor(props.note[1].length / Max_Length))*Max_Length)
-        console.log(text);
         return text
     }
 
@@ -119,11 +109,8 @@ export default function Note(props) {
             <StyledAccordion square expanded={expanded === 'panel' + props.id} onChange={handleChange('panel' + props.id)}>
                 <AccordionSummary>
                     <StyledHeader>
-                        Title: <StyledPTitle>{props.note[0]}</StyledPTitle>
+                        {props.note[0]}
                     </StyledHeader>
-                    <StyledDate>
-                        Date: <StyledPDate>{props.note[2].replace('T', ' ').substr(0,19)}</StyledPDate>
-                    </StyledDate>
                 </AccordionSummary>
                 <StyledDivider />
                 <AccordionDetails>
@@ -133,6 +120,9 @@ export default function Note(props) {
                 </AccordionDetails>
                 <StyledDivider />
                     <AccordionActions>
+                        <StyledDate>
+                            Date: {props.note[2].replace('T', ' ').substr(0,19)}
+                        </StyledDate>
                         <Button
                             size="small"
                              color="primary"

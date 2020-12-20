@@ -17,7 +17,7 @@ const Buttons = styled(Button)`
 
 const StyledTextField = styled(TextField)`
         width:250%;
-  margin-top: 10px;
+        margin-top: 10px;
 `
 
 const StyledTitleField = styled(TextField)`
@@ -30,13 +30,23 @@ export default function NoteField(props) {
     const [error, setError] = React.useState(false)
 
     const handleChangeText = (e) => {
-        setError(false);
+        if(title.length <= 50){
+            setError(false);
+        }
+        else {
+            setError(true);
+        }
         setText(e.target.value)
     }
 
     const handleChangeTitle = (e) => {
-        setError(false);
-        setText(e.target.value)
+        if(text.length <= 200){
+            setError(false);
+        }
+        else {
+            setError(true);
+        }
+        setTitle(e.target.value)
     }
 
     const handleClick = (e) => {
@@ -45,7 +55,7 @@ export default function NoteField(props) {
             title: title,
             text: text
         })
-        if (title !== '' && text !== '') {
+        if (title !== '' && text !== '' && title.length <= 50 && text.length <= 200) {
             fetch('/api/note/add', {
                 method: "POST",
                 headers: {
