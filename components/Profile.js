@@ -13,8 +13,20 @@ const StyledDiv = styled.div`
 `
 
 const StyledCard = styled(Card)`
+    border: 2px solid black;
     width: 20%;
     marginTop:30%
+`
+
+const StyledTitle = styled(Typography)`
+        margin-top: 10px;
+        font-size: 20px;
+  font-family: 'Orienta', sans-serif;
+`
+
+const StyledText = styled(Typography)`
+  font-size: 16px;
+  font-family: 'Orienta', sans-serif;
 `
 
 export default function Profile() {
@@ -48,15 +60,24 @@ export default function Profile() {
         <StyledCard>
             <CardContent>
                 <Avatar src="/public/male.jpg" alt='Something wrong' />
-                <Typography color="textSecondary" gutterBottom>
+                <StyledTitle
+                    color="textSecondary"
+                    gutterBottom
+                >
                     Profile
-                </Typography>
-                <Typography variant="body2" component="p">
+                </StyledTitle>
+                <StyledText
+                    variant="body2"
+                    component="p"
+                >
                     Username: {localStorage.getItem('username')}
-                </Typography>
-                <Typography variant="body2" component="p">
+                </StyledText>
+                <StyledText
+                    variant="body2"
+                    component="p"
+                >
                     Number of notes: {Count_notes()}
-                </Typography>
+                </StyledText>
             </CardContent>
         </StyledCard>
         </StyledDiv>
