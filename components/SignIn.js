@@ -26,34 +26,50 @@ export default function SingIn () {
 
     const [user, setUser] = React.useState('');
     const [pass, setPass] = React.useState('');
+    const [error, setError] = React.useState(false);
 
-    const handleSubmit = (event) => {
-        const input = JSON.stringify({
-            username: user,
-            password: pass
-        })
-        fetch('/api/user/login', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: input
-        })
-            .then((resp) => {
-                return resp.json()
+    const handleSubmit = () => {
+        if(user !== '' && pass !== '') {
+            const input = JSON.stringify({
+                username: user,
+                password: pass
             })
-            .then((data) => {
-                if(data.success) {
-                    localStorage.setItem('username', data.username);
-                    navigate('/profile');
-                }
-                else{
-                    alert(data.message)
-                }
+            fetch('/api/user/login', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: input
             })
-            .catch(e => {console.error(e)})
-        event.preventDefault();
+                .then((resp) => {
+                    return resp.json()
+                })
+                .then((data) => {
+                    if (data.success) {
+                        localStorage.setItem('username', data.username);
+                        navigate('/profile');
+                    } else {
+                        alert(data.message)
+                    }
+                })
+                .catch(e => {
+                    console.error(e)
+                })
+        }
+        else {
+            setError(true)
+        }
+    }
+
+    const handleChangeUser = (e) => {
+        setError(false)
+        setUser(e.target.value)
+    }
+
+    const handleChangePass = (e) => {
+        setError(false)
+        setPass(e.target.value)
     }
 
     navigate('/auth');
@@ -66,13 +82,29 @@ export default function SingIn () {
                 <StyledH>Sign In</StyledH>
                 <form>
                     <div>
-                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => {setUser(e.target.value)}} />
+                        <TextField
+                            error={error}
+                            id="filled-basic"
+                            label="Username"
+                            variant="filled"
+                            onChange={handleChangeUser}
+                        />
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}} />
+                        <TextField
+                            error={error}
+                            id="filled-basic"
+                            label="Password"
+                            variant="filled"
+                            onChange={handleChangePass}
+                        />
                     </div>
                     <div>
-                        <Buttons variant="outlined" color="primary" onClick={handleSubmit}>
+                        <Buttons
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleSubmit}
+                        >
                             Sign In
                         </Buttons>
                     </div>

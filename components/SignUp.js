@@ -21,52 +21,44 @@ const StyledH = styled.h2`
     color: #3f51b5;
 `
 
-const StyledDiv = styled.div`
-    margin-top: 5%;
-`
-
 export default function SingUp () {
     useTitle('Sign Up');
 
     const [user, setUser] = React.useState("");
     const [pass, setPass] = React.useState("");
+    const [error, setError] = React.useState(false);
 
     const handleSubmit = (event) => {
-        const input = JSON.stringify({
-            username: user,
-            password: pass
-        })
-        fetch('/api/user/reg', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: input
-        })
-            .then((resp) => {
-                return resp.json()
+        if(user !== '' && pass !== '') {
+            const input = JSON.stringify({
+                username: user,
+                password: pass
             })
-            .then((data) => {
-                 if (data.success) {
-                     navigate('/auth')
-                 }
-                 else {
-                     alert(data.message)
-                 }
+            fetch('/api/user/reg', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: input
             })
-            .catch(e => {console.error(e)})
-        event.preventDefault();
-    }
-
-    const Submit = (event) => {
-        if(user === '' || pass === '') {
-            alert("No");
+                .then((resp) => {
+                    return resp.json()
+                })
+                .then((data) => {
+                    if (data.success) {
+                        navigate('/auth')
+                    } else {
+                        alert(data.message)
+                    }
+                })
+                .catch(e => {
+                    console.error(e)
+                })
         }
         else {
-            alert("username: " + user + '\n' + "password: " + pass);
+            setError(true)
         }
-        event.preventDefault();
     }
 
     navigate('/register');
@@ -79,13 +71,29 @@ export default function SingUp () {
                 <StyledH>Sign Up</StyledH>
                 <form>
                     <div>
-                        <TextField id="filled-basic" label="Username" variant="filled" onChange={e => setUser(e.target.value)}/>
+                        <TextField
+                            error={error}
+                            id="filled-basic"
+                            label="Username"
+                            variant="filled"
+                            onChange={e => setUser(e.target.value)}
+                        />
                     </div>
                     <div>
-                        <TextField id="filled-basic" label="Password" variant="filled" onChange={e => {setPass(e.target.value)}}/>
+                        <TextField
+                            error={error}
+                            id="filled-basic"
+                            label="Password"
+                            variant="filled"
+                            onChange={e => {setPass(e.target.value)}}
+                        />
                     </div>
                     <div>
-                        <Buttons variant="outlined" color="primary" onClick={handleSubmit}>
+                        <Buttons
+                            variant="outlined"
+                            color="primary"
+                            onClick={handleSubmit}
+                        >
                             Sign Up
                         </Buttons>
                     </div>
