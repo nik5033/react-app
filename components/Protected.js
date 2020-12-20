@@ -26,7 +26,7 @@ export default function Profile_Protect({component: Component}) {
     return(
         <div>
             {IsAuth()}
-            {Auth ? <Component /> : navigate('auth')};
+            {Auth ? <Component /> : navigate('auth')}
         </div>
     )
 }

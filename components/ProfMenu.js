@@ -17,7 +17,6 @@ export default function ProfMenu() {
             })
             .then((data) => {
                 setAuth(data.IsAuth);
-                return Auth
             })
         event.preventDefault();
     }

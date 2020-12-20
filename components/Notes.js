@@ -38,7 +38,6 @@ export default function Notes() {
                 return resp.json()
             })
             .then((data) => {
-                console.log(data.notes)
                 setNotes(data.notes);
             })
             .catch(e => {
