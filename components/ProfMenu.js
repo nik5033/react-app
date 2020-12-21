@@ -36,7 +36,7 @@ export default function ProfMenu() {
         navigate('/notes');
     };
 
-    const handleLogout = (event) => {
+    const handleLogout = () => {
         setAnchorEl(null);
         fetch('/api/user/out', {
             method: "GET",
@@ -51,7 +51,6 @@ export default function ProfMenu() {
             .catch(e => {
             console.error((e))
         })
-        event.preventDefault();
     }
 
     const handleClose = () => {
@@ -62,7 +61,6 @@ export default function ProfMenu() {
         <div>
             <Tab label="Profile" onClick={handleClick} />
             <Menu
-                id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}

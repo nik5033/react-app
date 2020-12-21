@@ -28,7 +28,7 @@ export default function SingUp () {
     const [pass, setPass] = React.useState("");
     const [error, setError] = React.useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         if(user !== '' && pass !== '') {
             const input = JSON.stringify({
                 username: user,

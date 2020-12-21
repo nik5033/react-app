@@ -32,6 +32,7 @@ export default function NoteField(props) {
     const handleChangeText = (e) => {
         if(title.length <= 50){
             setError(false);
+            e.preventDefault()
         }
         else {
             setError(true);
@@ -42,6 +43,7 @@ export default function NoteField(props) {
     const handleChangeTitle = (e) => {
         if(text.length <= 200){
             setError(false);
+            e.preventDefault()
         }
         else {
             setError(true);
