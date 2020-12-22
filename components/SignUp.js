@@ -73,7 +73,6 @@ export default function SingUp () {
                     <div>
                         <TextField
                             error={error}
-                            id="filled-basic"
                             label="Username"
                             variant="filled"
                             onChange={e => setUser(e.target.value)}
@@ -82,7 +81,6 @@ export default function SingUp () {
                     <div>
                         <TextField
                             error={error}
-                            id="filled-basic"
                             label="Password"
                             variant="filled"
                             onChange={e => {setPass(e.target.value)}}

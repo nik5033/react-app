@@ -100,7 +100,7 @@ export default function NoteField(props) {
                     helperText={error ? "Incorrect entry." : ''}
                     label="Multiline"
                     multiline
-                    rows={4}
+                    rows={5}
                     variant="outlined"
                     onChange={handleChangeText}
                 />

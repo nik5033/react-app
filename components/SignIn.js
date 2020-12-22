@@ -84,7 +84,6 @@ export default function SingIn () {
                     <div>
                         <TextField
                             error={error}
-                            id="filled-basic"
                             label="Username"
                             variant="filled"
                             onChange={handleChangeUser}
@@ -93,7 +92,6 @@ export default function SingIn () {
                     <div>
                         <TextField
                             error={error}
-                            id="filled-basic"
                             label="Password"
                             variant="filled"
                             onChange={handleChangePass}

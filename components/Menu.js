@@ -9,7 +9,7 @@ export default function SimpleTabs() {
     return (
         <div>
             <AppBar position="static">
-                <Tabs aria-label="simple tabs example">
+                <Tabs>
                     <Tab label="Home" onClick={() => navigate('/')} />
                     <Tab label="Sign In" onClick={() => navigate('/auth')} />
                     <Tab label="Sign Up" onClick={() => navigate('/register')} />
